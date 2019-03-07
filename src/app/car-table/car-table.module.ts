@@ -10,7 +10,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { GridTableVirtualScrollModule } from '../virtual-scroll/virtual-scroll.module';
 import { CarTableComponent } from './car-table.component';
 
-import { CarTableDataService } from './car-table-data.service'
+import { CarTableDataService } from './car-table-data.service';
 
 const components = [CarTableComponent];
 

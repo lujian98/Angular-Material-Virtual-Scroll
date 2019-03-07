@@ -12,6 +12,6 @@ export class CarTableDataService {
   }
 
   getAllData(): Observable<any[]> {
-    return this.http.get<any[]>('./assets/data/cars-huge.json')
+    return this.http.get<any[]>('./assets/data/cars-huge.json');
   }
 }

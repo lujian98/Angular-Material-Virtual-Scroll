@@ -1,5 +1,5 @@
 
-<mat-checkbox #chk color="primary" (change)="sticky = chk.checked">Sticky</mat-checkbox>
+<mat-checkbox #chk color="primary" checked="true" (change)="sticky = chk.checked">Sticky</mat-checkbox>
 
 <cdk-virtual-scroll-viewport gridTableVirtualScroll
 	(scrolledIndexChange)="nextBatch($event)">
