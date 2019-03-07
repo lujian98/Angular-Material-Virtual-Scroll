@@ -19,7 +19,7 @@ import { CarTableDataService } from './car-table-data.service';
 })
 export class CarTableComponent<T> implements OnInit {
   pending: boolean;
-  sticky = true;
+  sticky = false;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -75,6 +75,7 @@ export class CarTableComponent<T> implements OnInit {
     );
   }
   nextBatch(event) {
+    if ( !this.sticky ) { this.sticky = true; }
     const buffer = 20;
     const range = this.viewport.getRenderedRange();
     const end = range.end;

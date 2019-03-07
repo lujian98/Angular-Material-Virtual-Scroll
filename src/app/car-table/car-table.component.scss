@@ -34,6 +34,9 @@
 @include base;
 @include progress;
 
+.title {
+  height: 60px;
+}
 cdk-virtual-scroll-viewport {
   height: 600px;
 }
