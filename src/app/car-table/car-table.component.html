@@ -1,5 +1,5 @@
 
-<mat-checkbox #chk color="primary" checked="true" (change)="sticky = chk.checked">Sticky</mat-checkbox>
+<mat-checkbox #chk color="primary" [checked]="sticky" (change)="sticky = chk.checked">Sticky</mat-checkbox>
 
 <cdk-virtual-scroll-viewport gridTableVirtualScroll
 	(scrolledIndexChange)="nextBatch($event)">
@@ -7,20 +7,20 @@
 
 		<ng-container *ngFor="let column of visibleColumns; let i = index" matColumnDef="{{ column.field }}">
 			<mat-header-cell *matHeaderCellDef>
-					<div mat-sort-header>{{ column.field }}</div>
+				<div mat-sort-header>{{ column.field }}</div>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row[column.field] }}</mat-cell>
 		</ng-container>
 
 		<ng-container matColumnDef="progress">
-			<mat-header-cell *matHeaderCellDef [attr.colspan]="columns.length">
+			<mat-header-cell *matHeaderCellDef [attr.colspan]="displayedColumns.length">
 				<mat-progress-bar mode="indeterminate" [class.show]="pending">
         </mat-progress-bar>
 			</mat-header-cell>
-		</ng-container>
+    </ng-container>
 
 		<mat-header-row
-      *matHeaderRowDef="columns; sticky: sticky"
+      *matHeaderRowDef="displayedColumns; sticky: sticky"
       [style.top.px]="offset | async">
     </mat-header-row>
 		<mat-header-row
@@ -28,9 +28,9 @@
       *matHeaderRowDef="['progress']; sticky: sticky"
       [style.top.px]="(offset | async) + 56">
     </mat-header-row>
-		<mat-row *matRowDef="let row; columns: columns"></mat-row>
-	</mat-table>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
 
+	</mat-table>
 </cdk-virtual-scroll-viewport>
 
 

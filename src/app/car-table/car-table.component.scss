@@ -2,16 +2,11 @@
   .mat-table {
     width: 100%;
   }
-  .mat-header-cell:not(:last-of-type),
-  .mat-cell:not(:last-of-type) {
-    padding-right: 16px;
-  }
 }
 
 @mixin progress {
   .mat-header-row.progress {
     border: none;
-    // height: 0;
     min-height: 0;
 
     .mat-header-cell {
@@ -41,13 +36,4 @@
 
 cdk-virtual-scroll-viewport {
   height: 600px;
-}
-
-// this compensates for flex display, i.e. not using <table>
-.mat-column-id {
-  max-width: 4rem;
-}
-
-.mat-column-actions {
-  max-width: 24px;
 }

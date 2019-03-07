@@ -18,13 +18,13 @@ import { CarTableDataService } from './car-table-data.service';
   styleUrls: ['./car-table.component.scss']
 })
 export class CarTableComponent<T> implements OnInit {
-  @Input() sticky: boolean;
   pending: boolean;
+  sticky = true;
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
   @ViewChild(MatSort) sort: MatSort;
 
   dataSource: GridTableDataSource<T>;
-  columns: string[];
+  displayedColumns: string[];
   offset: Observable<number>;
   visibleColumns: any[];
   _alldata: any[];
@@ -35,7 +35,6 @@ export class CarTableComponent<T> implements OnInit {
   constructor(
     protected dataSourceService: CarTableDataService,
   ) {
-    this.columns = ['id', 'vin', 'brand', 'year', 'color'];
     this.visibleColumns = [{
       field: 'id'
     }, {
@@ -47,10 +46,10 @@ export class CarTableComponent<T> implements OnInit {
     }, {
       field: 'color'
     }];
+    this.displayedColumns = this.visibleColumns.map(column => column.field);
   }
 
   ngOnInit() {
-    this.pending = false;
     this.init();
     this.dataSourceService.getAllData()
     .subscribe(
