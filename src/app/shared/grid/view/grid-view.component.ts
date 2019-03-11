@@ -5,17 +5,14 @@ import {
   AfterViewInit,
   OnChanges,
   SimpleChanges,
-  ElementRef,
   Input,
-  Renderer2,
   Output,
   EventEmitter,
 } from '@angular/core';
 
 import { BehaviorSubject, Observable, fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import { MatTableDataSource, MatSort } from '@angular/material';
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { MatTableDataSource, MatSort, MatTable } from '@angular/material';
 
 import { SunColumn } from '../column.model';
 
@@ -28,9 +25,10 @@ import { SunColumn } from '../column.model';
 export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() columns: SunColumn[];
   @Input() dataSource: any;
-  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
 
-  @Output() sunViewportReadyEvent: EventEmitter<object> = new EventEmitter<object>();
+  @ViewChild(MatTable) table: MatTable<any>;
+
+  @Output() sunDataSourceReadyEvent: EventEmitter<object> = new EventEmitter<object>();
 
   visibleColumns: SunColumn[] = [];
   totalVisibleColumns: number;
@@ -40,8 +38,6 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   sticky = false;
   offset: Observable<number>;
 
-  page = 1;
-  pageSize = 80;
   constructor(
   ) { }
 
@@ -61,34 +57,13 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
     if ( !this.isDataSourceReady && changes.dataSource && changes.dataSource.currentValue ) {
       setTimeout(() => {
         this.isDataSourceReady = true;
+        this.sunDataSourceReadyEvent.emit({isDataSourceReady: this.isDataSourceReady})
       }, 10);
     }
   }
   ngAfterViewInit() {
-    this.offset = this.viewport.renderedRangeStream.pipe(
-      map(() => -this.viewport.getOffsetToRenderedContentStart())
-    );
-    setTimeout(() => {
-      this.sunViewportReadyEvent.emit({viewport: this.viewport});
-    }, 10);
   }
   nextBatch(event) {
     if ( !this.sticky ) { this.sticky = true; }
-    const buffer = 20;
-    const range = this.viewport.getRenderedRange();
-    const end = range.end;
-    console.info(' next batch');
-    /*
-    //console.log( this.dataSource )
-    if ( this.dataSource.allData && this.dataSource.allData.length > 0 ) {
-      if ( end + buffer > this.page * this.pageSize ) {
-        this.page++;
-        this.pending = true;
-        setTimeout(() => {
-          //this.dataSource.allData = this._alldata.slice(0, this.page * this.pageSize);
-          this.pending = false;
-        }, 250);
-      }
-    }*/
   }
 }

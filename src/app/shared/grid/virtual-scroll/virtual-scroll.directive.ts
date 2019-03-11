@@ -9,13 +9,14 @@ import {
   SimpleChanges,
   OnDestroy,
 } from '@angular/core';
-import { MatTable } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { GridTableDataSource } from './data-source';
 import { GridTableVirtualScrollStrategy } from './virtual-scroll.strategy';
 
+import { SunGridViewComponent } from '../view/grid-view.component';
+
 @Directive({
-  selector: 'cdk-virtual-scroll-viewport[gridTableVirtualScroll]',
+  selector: '[gridTableVirtualScroll]',
   providers: [
     {
       provide: VIRTUAL_SCROLL_STRATEGY,
@@ -29,9 +30,7 @@ export class GridTableVirtualScrollDirective
   @Input() rowHeight = 48;
   @Input() offset = 56;
   @Input() isDataSourceReady;
-
-
-  @ContentChild(MatTable) table: MatTable<any>;
+  @ContentChild(SunGridViewComponent) gridView: SunGridViewComponent;
 
   scrollStrategy: GridTableVirtualScrollStrategy;
 
@@ -47,12 +46,15 @@ export class GridTableVirtualScrollDirective
   ngAfterViewInit() {
   }
   ngOnChanges(changes: SimpleChanges) {
-    if ( changes.isDataSourceReady.currentValue) { this.initialScrollStrateg(); }
+    if ( changes.isDataSourceReady.currentValue) {
+      this.initialScrollStrateg();
+    }
     this.scrollStrategy.setScrollHeight(this.rowHeight, this.offset);
   }
   initialScrollStrateg() {
-    if (this.table.dataSource instanceof GridTableDataSource) {
-      this.sub = this.table.dataSource.queryData.subscribe(data => {
+    const table = this.gridView.table;
+    if (table.dataSource instanceof GridTableDataSource) {
+      this.sub = table.dataSource.queryData.subscribe(data => {
         this.scrollStrategy.setDataLength(data.length);
       });
     }

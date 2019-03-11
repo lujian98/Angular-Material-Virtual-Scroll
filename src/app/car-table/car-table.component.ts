@@ -22,7 +22,7 @@ import { SunColumn } from '../shared/grid/column.model';
 })
 export class CarTableComponent<T> implements OnInit, AfterViewInit {
   //@ViewChild(SunGridViewComponent) gridView: SunGridViewComponent;
-  @ViewChild(SunVirtualScrollViewComponent) gridVirtualScroll: SunGridViewComponent;
+  @ViewChild(SunVirtualScrollViewComponent) gridVirtualScroll: SunVirtualScrollViewComponent;
 
   columns: SunColumn[] = [];
   dataSource: GridTableDataSource<T>;
@@ -53,6 +53,7 @@ export class CarTableComponent<T> implements OnInit, AfterViewInit {
     if (this.dataSource) {
       return;
     }
+    console.log(viewport)
     this.dataSource = new GridTableDataSource([], {
       viewport: viewport,
     });
