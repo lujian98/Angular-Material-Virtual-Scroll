@@ -22,7 +22,7 @@ import { SunGridViewComponent } from './grid-view.component';
 import { SunColumn } from '../column.model';
 
 @Component({
-  selector: 'sun-virtual-scroll-view',
+  selector: 'app-virtual-scroll-view',
   templateUrl: './virtual-scroll-view.component.html',
   styleUrls: ['./virtual-scroll-view.component.scss']
 

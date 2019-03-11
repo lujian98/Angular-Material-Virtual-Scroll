@@ -45,7 +45,7 @@ import {
 
 import { GridTableVirtualScrollDirective } from './virtual-scroll/virtual-scroll.directive';
 
-//import { SunBaseGridComponent } from './grid.component';
+import { SunBaseGridComponent } from './grid.component';
 import { SunGridViewComponent } from './view/grid-view.component';
 import { SunVirtualScrollViewComponent } from './view/virtual-scroll-view.component';
 
@@ -95,16 +95,19 @@ import { SunVirtualScrollViewComponent } from './view/virtual-scroll-view.compon
     MatTooltipModule,
   ],
   declarations: [
+    SunBaseGridComponent,
     SunGridViewComponent,
     SunVirtualScrollViewComponent,
     GridTableVirtualScrollDirective,
   ],
   exports: [
+    SunBaseGridComponent,
     SunGridViewComponent,
     SunVirtualScrollViewComponent,
     GridTableVirtualScrollDirective,
   ],
   entryComponents: [
+    SunBaseGridComponent,
     SunGridViewComponent,
   ],
   providers: [],

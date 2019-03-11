@@ -17,7 +17,7 @@ import { MatTableDataSource, MatSort, MatTable } from '@angular/material';
 import { SunColumn } from '../column.model';
 
 @Component({
-  selector: 'sun-grid-view',
+  selector: 'app-grid-view',
   templateUrl: './grid-view.component.html',
   styleUrls: ['./grid-view.component.scss']
 
@@ -58,7 +58,7 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
     if ( !this.isDataSourceReady && changes.dataSource && changes.dataSource.currentValue ) {
       setTimeout(() => {
         this.isDataSourceReady = true;
-        this.sunDataSourceReadyEvent.emit({isDataSourceReady: this.isDataSourceReady})
+        this.sunDataSourceReadyEvent.emit({isDataSourceReady: this.isDataSourceReady});
       }, 10);
     }
   }
