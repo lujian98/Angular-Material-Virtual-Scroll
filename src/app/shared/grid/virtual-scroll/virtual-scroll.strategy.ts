@@ -1,7 +1,4 @@
-import {
-  CdkVirtualScrollViewport,
-  VirtualScrollStrategy,
-} from '@angular/cdk/scrolling';
+import { CdkVirtualScrollViewport, VirtualScrollStrategy } from '@angular/cdk/scrolling';
 import { Observable, Subject } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 

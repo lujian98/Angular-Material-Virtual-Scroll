@@ -2,8 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { SunBaseGridComponent } from '../shared/grid/grid.component';
 import { CarTableDataService } from './car-table-data.service';
 
-
-
 @Component({
   selector: 'app-car-table',
   templateUrl: './car-table.component.html',

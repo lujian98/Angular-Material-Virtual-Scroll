@@ -1,26 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  OnChanges,
-  SimpleChanges,
-  ElementRef,
-  Input,
-  Renderer2,
-  Output,
-  EventEmitter,
-  OnDestroy,
-} from '@angular/core';
-
-import { BehaviorSubject, Observable, fromEvent, Subscription } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { GridTableDataSource } from '../virtual-scroll/grid-table-data-source';
-
-import { SunGridViewComponent } from './grid-view.component';
-
+import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { SunColumn } from '../column.model';
+import { GridTableDataSource } from '../virtual-scroll/grid-table-data-source';
+import { SunGridViewComponent } from './grid-view.component';
 
 @Component({
   selector: 'app-virtual-scroll-view',

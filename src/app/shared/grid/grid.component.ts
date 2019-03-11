@@ -1,12 +1,10 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material';
-
-import { GridTableDataSource } from './virtual-scroll/grid-table-data-source';
-
+import { Subscription } from 'rxjs';
 import { SunColumn } from './column.model';
 import { SunGridViewComponent } from './view/grid-view.component';
 import { SunVirtualScrollViewComponent } from './view/virtual-scroll-view.component';
+import { GridTableDataSource } from './virtual-scroll/grid-table-data-source';
 
 @Component({
   template: '',

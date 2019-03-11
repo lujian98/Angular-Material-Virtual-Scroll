@@ -1,19 +1,6 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  AfterViewInit,
-  OnChanges,
-  SimpleChanges,
-  Input,
-  Output,
-  EventEmitter,
-} from '@angular/core';
-
-import { BehaviorSubject, Observable, fromEvent } from 'rxjs';
-import { map, debounceTime } from 'rxjs/operators';
-import { MatTableDataSource, MatSort, MatTable } from '@angular/material';
-
+import { AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import { MatTable } from '@angular/material';
+import { Observable } from 'rxjs';
 import { SunColumn } from '../column.model';
 
 @Component({
@@ -29,7 +16,6 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() offset: Observable<number>;
   @Input() sticky: boolean;
   @Input() pending: boolean;
-
 
   @ViewChild(MatTable) table: MatTable<any>;
 

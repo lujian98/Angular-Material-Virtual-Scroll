@@ -1,20 +1,11 @@
 import { VIRTUAL_SCROLL_STRATEGY } from '@angular/cdk/scrolling';
-import {
-  AfterViewInit,
-  ContentChild,
-  Directive,
-  forwardRef,
-  Input,
-  OnChanges,
-  SimpleChanges,
-  OnDestroy,
-} from '@angular/core';
+import { AfterViewInit, ContentChild, Directive, forwardRef, Input, OnChanges, OnDestroy, SimpleChanges } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { SunGridViewComponent } from '../view/grid-view.component';
 import { GridTableDataSource } from './grid-table-data-source';
 import { GridTableVirtualScrollStrategy } from './virtual-scroll.strategy';
 
-import { SunGridViewComponent } from '../view/grid-view.component';
-
+// @dynamic
 @Directive({
   selector: '[gridTableVirtualScroll]',
   providers: [
