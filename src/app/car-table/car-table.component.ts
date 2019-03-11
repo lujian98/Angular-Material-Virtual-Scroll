@@ -6,7 +6,7 @@ import {
   AfterViewInit,
 } from '@angular/core';
 
-import { GridTableDataSource } from '../shared/grid/virtual-scroll/data-source';
+import { GridTableDataSource } from '../shared/grid/virtual-scroll/grid-table-data-source';
 import { CarTableDataService } from './car-table-data.service';
 
 import { SunGridViewComponent } from '../shared/grid/view/grid-view.component';
@@ -21,7 +21,7 @@ import { SunColumn } from '../shared/grid/column.model';
   styleUrls: ['./car-table.component.scss']
 })
 export class CarTableComponent<T> implements OnInit, AfterViewInit {
-  @ViewChild(SunVirtualScrollViewComponent) gridVirtualScroll: SunVirtualScrollViewComponent;
+  @ViewChild(SunVirtualScrollViewComponent) gridVirtualScroll: SunVirtualScrollViewComponent<T>;
 
   columns: SunColumn[] = [];
   dataSource: GridTableDataSource<T>;

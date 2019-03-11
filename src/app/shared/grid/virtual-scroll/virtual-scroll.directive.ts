@@ -10,7 +10,7 @@ import {
   OnDestroy,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { GridTableDataSource } from './data-source';
+import { GridTableDataSource } from './grid-table-data-source';
 import { GridTableVirtualScrollStrategy } from './virtual-scroll.strategy';
 
 import { SunGridViewComponent } from '../view/grid-view.component';

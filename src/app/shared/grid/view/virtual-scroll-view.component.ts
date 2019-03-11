@@ -14,8 +14,9 @@ import {
 
 import { BehaviorSubject, Observable, fromEvent } from 'rxjs';
 import { map, debounceTime } from 'rxjs/operators';
-import { MatTableDataSource, MatSort } from '@angular/material';
 import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
+import { GridTableDataSource } from '../virtual-scroll/grid-table-data-source';
+
 import { SunGridViewComponent } from './grid-view.component';
 
 import { SunColumn } from '../column.model';
@@ -26,9 +27,9 @@ import { SunColumn } from '../column.model';
   styleUrls: ['./virtual-scroll-view.component.scss']
 
 })
-export class SunVirtualScrollViewComponent implements AfterViewInit {
+export class SunVirtualScrollViewComponent<T> implements AfterViewInit {
   @Input() columns: SunColumn[];
-  @Input() dataSource: any;
+  @Input() dataSource: GridTableDataSource<T>;
   @Input() pending: boolean;
 
   @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
