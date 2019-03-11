@@ -25,6 +25,10 @@ import { SunColumn } from '../column.model';
 export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() columns: SunColumn[];
   @Input() dataSource: any;
+  @Input() offset: Observable<number>;
+  @Input() sticky: boolean;
+  @Input() pending: boolean;
+
 
   @ViewChild(MatTable) table: MatTable<any>;
 
@@ -34,9 +38,6 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   totalVisibleColumns: number;
   displayedColumns: string[];
   isDataSourceReady = false;
-  pending: boolean;
-  sticky = false;
-  offset: Observable<number>;
 
   constructor(
   ) { }
@@ -62,8 +63,5 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
     }
   }
   ngAfterViewInit() {
-  }
-  nextBatch(event) {
-    if ( !this.sticky ) { this.sticky = true; }
   }
 }

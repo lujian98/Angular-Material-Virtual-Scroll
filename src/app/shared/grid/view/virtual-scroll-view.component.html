@@ -6,8 +6,11 @@
   (scrolledIndexChange)="nextBatch($event)">
 
   <sun-grid-view
-  [columns]="columns"
-  [dataSource]="dataSource">
+    [columns]="columns"
+    [dataSource]="dataSource"
+    [offset]="offset"
+    [pending]="pending"
+    [sticky]="sticky">
   </sun-grid-view>
 
 </cdk-virtual-scroll-viewport>
