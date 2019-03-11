@@ -43,11 +43,12 @@ import {
   MatTooltipModule,
 } from '@angular/material';
 
+import { GridTableVirtualScrollDirective } from './virtual-scroll/virtual-scroll.directive';
+
 //import { SunBaseGridComponent } from './grid.component';
 import { SunGridViewComponent } from './view/grid-view.component';
+import { SunVirtualScrollViewComponent } from './view/virtual-scroll-view.component';
 
-
-import { GridTableVirtualScrollDirective } from './virtual-scroll/virtual-scroll.directive';
 
 @NgModule({
   imports: [
@@ -95,10 +96,12 @@ import { GridTableVirtualScrollDirective } from './virtual-scroll/virtual-scroll
   ],
   declarations: [
     SunGridViewComponent,
+    SunVirtualScrollViewComponent,
     GridTableVirtualScrollDirective,
   ],
   exports: [
     SunGridViewComponent,
+    SunVirtualScrollViewComponent,
     GridTableVirtualScrollDirective,
   ],
   entryComponents: [

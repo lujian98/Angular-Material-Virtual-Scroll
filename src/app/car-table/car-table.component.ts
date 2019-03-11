@@ -10,6 +10,8 @@ import { GridTableDataSource } from '../shared/grid/virtual-scroll/data-source';
 import { CarTableDataService } from './car-table-data.service';
 
 import { SunGridViewComponent } from '../shared/grid/view/grid-view.component';
+import { SunVirtualScrollViewComponent } from '../shared/grid/view/virtual-scroll-view.component';
+
 import { SunColumn } from '../shared/grid/column.model';
 
 
@@ -19,7 +21,8 @@ import { SunColumn } from '../shared/grid/column.model';
   styleUrls: ['./car-table.component.scss']
 })
 export class CarTableComponent<T> implements OnInit, AfterViewInit {
-  @ViewChild(SunGridViewComponent) gridView: SunGridViewComponent;
+  //@ViewChild(SunGridViewComponent) gridView: SunGridViewComponent;
+  @ViewChild(SunVirtualScrollViewComponent) gridVirtualScroll: SunGridViewComponent;
 
   columns: SunColumn[] = [];
   dataSource: GridTableDataSource<T>;
@@ -42,7 +45,9 @@ export class CarTableComponent<T> implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.gridView.sunViewportReadyEvent.subscribe((e) => this.onViewportReadyEvent(e) );
+    //this.gridView.sunViewportReadyEvent.subscribe((e) => this.onViewportReadyEvent(e) );
+    this.gridVirtualScroll.sunViewportReadyEvent.subscribe((e) => this.onViewportReadyEvent(e) );
+
   }
   initDataSource(viewport) {
     if (this.dataSource) {
