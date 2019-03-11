@@ -40,7 +40,7 @@ export class SunVirtualScrollViewComponent<T> implements AfterViewInit, OnDestro
   @Output() sunNextPageEvent: EventEmitter<object> = new EventEmitter<object>();
 
 
-  isDataSourceReady = false;
+  isDataSourceReady: boolean;
   offset: Observable<number>;
   sticky: boolean;
 

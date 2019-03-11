@@ -38,7 +38,7 @@ export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   visibleColumns: SunColumn[] = [];
   totalVisibleColumns: number;
   displayedColumns: string[];
-  isDataSourceReady = false;
+  isDataSourceReady: boolean;
 
   constructor(
   ) { }

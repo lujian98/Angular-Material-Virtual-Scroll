@@ -29,7 +29,7 @@ export class GridTableVirtualScrollDirective
   implements AfterViewInit, OnChanges, OnDestroy {
   @Input() rowHeight = 48;
   @Input() offset = 56;
-  @Input() isDataSourceReady;
+  @Input() isDataSourceReady: boolean;
   @ContentChild(SunGridViewComponent) gridView: SunGridViewComponent;
 
   scrollStrategy: GridTableVirtualScrollStrategy;
