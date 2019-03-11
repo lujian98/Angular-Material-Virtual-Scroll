@@ -3,54 +3,55 @@ import {
   Input,
   OnInit,
   ViewChild,
+  AfterViewInit,
 } from '@angular/core';
 
-import { CdkVirtualScrollViewport } from '@angular/cdk/scrolling';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { GridTableDataSource } from '../virtual-scroll/data-source';
-import { MatSort } from '@angular/material';
+import { GridTableDataSource } from '../shared/grid/virtual-scroll/data-source';
 import { CarTableDataService } from './car-table-data.service';
+
+import { SunGridViewComponent } from '../shared/grid/view/grid-view.component';
+import { SunColumn } from '../shared/grid/column.model';
+
 
 @Component({
   selector: 'app-car-table',
   templateUrl: './car-table.component.html',
   styleUrls: ['./car-table.component.scss']
 })
-export class CarTableComponent<T> implements OnInit {
-  pending: boolean;
-  sticky = false;
-  @ViewChild(CdkVirtualScrollViewport) viewport: CdkVirtualScrollViewport;
-  @ViewChild(MatSort) sort: MatSort;
+export class CarTableComponent<T> implements OnInit, AfterViewInit {
+  @ViewChild(SunGridViewComponent) gridView: SunGridViewComponent;
 
+  columns: SunColumn[] = [];
   dataSource: GridTableDataSource<T>;
-  displayedColumns: string[];
-  offset: Observable<number>;
-  visibleColumns: any[];
   _alldata: any[];
-
-  page = 1;
   pageSize = 80;
 
   constructor(
     protected dataSourceService: CarTableDataService,
   ) {
-    this.visibleColumns = [{
-      field: 'id'
-    }, {
-      field: 'vin'
-    }, {
-      field: 'brand'
-    }, {
-      field: 'year'
-    }, {
-      field: 'color'
-    }];
-    this.displayedColumns = this.visibleColumns.map(column => column.field);
   }
 
   ngOnInit() {
-    this.init();
+    this.columns = [
+      { field: 'id', header: 'id'},
+      { field: 'vin', header: 'Vin' },
+      { field: 'year', header: 'Year', filter: 'number' },
+      { field: 'brand', header: 'Brand', filter: 'select' },
+      { field: 'color', header: 'Color' }
+    ];
+  }
+
+  ngAfterViewInit() {
+    this.gridView.sunViewportReadyEvent.subscribe((e) => this.onViewportReadyEvent(e) );
+  }
+  initDataSource(viewport) {
+    if (this.dataSource) {
+      return;
+    }
+    this.dataSource = new GridTableDataSource([], {
+      viewport: viewport,
+    });
+
     this.dataSourceService.getAllData()
     .subscribe(
       (data: any[]) => {
@@ -58,36 +59,13 @@ export class CarTableComponent<T> implements OnInit {
             item.id = index;
           });
           this._alldata = data['data'];
+          console.log(  this.dataSource )
           this.dataSource.allData = this._alldata.slice(0, this.pageSize);
         },
       (err: any) => console.log(err)
     );
   }
-  private init() {
-    if (this.dataSource) {
-      return;
-    }
-    this.dataSource = new GridTableDataSource([], {
-      viewport: this.viewport,
-    });
-    this.offset = this.viewport.renderedRangeStream.pipe(
-      map(() => -this.viewport.getOffsetToRenderedContentStart())
-    );
-  }
-  nextBatch(event) {
-    if ( !this.sticky ) { this.sticky = true; }
-    const buffer = 20;
-    const range = this.viewport.getRenderedRange();
-    const end = range.end;
-    if ( this.dataSource.allData && this.dataSource.allData.length > 0 ) {
-      if ( end + buffer > this.page * this.pageSize ) {
-        this.page++;
-        this.pending = true;
-        setTimeout(() => {
-          this.dataSource.allData = this._alldata.slice(0, this.page * this.pageSize);
-          this.pending = false;
-        }, 250);
-      }
-    }
+  onViewportReadyEvent(e) {
+    this.initDataSource(e.viewport);
   }
 }

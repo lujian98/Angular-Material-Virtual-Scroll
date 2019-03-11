@@ -6,6 +6,7 @@ import {
   forwardRef,
   Input,
   OnChanges,
+  SimpleChanges,
   OnDestroy,
 } from '@angular/core';
 import { MatTable } from '@angular/material';
@@ -18,15 +19,17 @@ import { GridTableVirtualScrollStrategy } from './virtual-scroll.strategy';
   providers: [
     {
       provide: VIRTUAL_SCROLL_STRATEGY,
-      useFactory: (scroll: GridTableFixedVirtualScrollDirective) => scroll.scrollStrategy,
-      deps: [forwardRef(() => GridTableFixedVirtualScrollDirective)],
+      useFactory: (scroll: GridTableVirtualScrollDirective) => scroll.scrollStrategy,
+      deps: [forwardRef(() => GridTableVirtualScrollDirective)],
     },
   ],
 })
-export class GridTableFixedVirtualScrollDirective
+export class GridTableVirtualScrollDirective
   implements AfterViewInit, OnChanges, OnDestroy {
   @Input() rowHeight = 48;
   @Input() offset = 56;
+  @Input() isDataSourceReady;
+
 
   @ContentChild(MatTable) table: MatTable<any>;
 
@@ -42,17 +45,18 @@ export class GridTableFixedVirtualScrollDirective
   }
 
   ngAfterViewInit() {
+  }
+  ngOnChanges(changes: SimpleChanges) {
+    if ( changes.isDataSourceReady.currentValue) { this.initialScrollStrateg(); }
+    this.scrollStrategy.setScrollHeight(this.rowHeight, this.offset);
+  }
+  initialScrollStrateg() {
     if (this.table.dataSource instanceof GridTableDataSource) {
       this.sub = this.table.dataSource.queryData.subscribe(data => {
         this.scrollStrategy.setDataLength(data.length);
       });
     }
   }
-
-  ngOnChanges() {
-    this.scrollStrategy.setScrollHeight(this.rowHeight, this.offset);
-  }
-
   ngOnDestroy() {
     if (this.sub) {
       this.sub.unsubscribe();

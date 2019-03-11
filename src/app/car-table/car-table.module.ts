@@ -7,7 +7,7 @@ import {
   MatTableModule
 } from '@angular/material';
 import { BrowserModule } from '@angular/platform-browser';
-import { GridTableVirtualScrollModule } from '../virtual-scroll/virtual-scroll.module';
+import { GridModule } from '../shared/grid/grid.module';
 import { CarTableComponent } from './car-table.component';
 
 import { CarTableDataService } from './car-table-data.service';
@@ -19,7 +19,7 @@ const components = [CarTableComponent];
   exports: components,
   imports: [
     BrowserModule,
-    GridTableVirtualScrollModule,
+    GridModule,
     MatCheckboxModule,
     MatProgressBarModule,
     MatSortModule,
