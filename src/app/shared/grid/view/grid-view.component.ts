@@ -24,6 +24,7 @@ import { SunColumn } from '../column.model';
 })
 export class SunGridViewComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() columns: SunColumn[];
+  @Input() isVirtualScroll: boolean;
   @Input() dataSource: any;
   @Input() offset: Observable<number>;
   @Input() sticky: boolean;

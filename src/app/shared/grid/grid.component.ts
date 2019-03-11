@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-
+import { Subscription } from 'rxjs';
 import { MatTableDataSource } from '@angular/material';
 
 import { GridTableDataSource } from './virtual-scroll/grid-table-data-source';
@@ -15,33 +15,30 @@ export class SunBaseGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(SunGridViewComponent) protected gridView: SunGridViewComponent;
   @ViewChild(SunVirtualScrollViewComponent) gridVirtualScroll: SunVirtualScrollViewComponent<any>;
 
+  isVirtualScroll: boolean;
 
   protected dataSourceService: any;
   dataSource: any;
-  //dataSource = new MatTableDataSource();
+  _alldata: any[];
 
   columns: SunColumn[] = [];
   columnKeys: {} = {};
-
-  _alldata: any[];
 
   pending: boolean;
   page = 1;
   pageSize = 80;
 
-
   filterSelectData: {} = {};
 
-  lazyLoading: boolean;
-  loading: boolean;
+  private subViewportReady: Subscription;
+  private subNextPage: Subscription;
 
   constructor(
   ) {
   }
   ngOnInit() {
-    //this.lazyLoading = true;
     this.initialColumn();
-    //this.initalDataSource();
+    if ( !this.isVirtualScroll ) { this.initMatTableDataSource(); }
   }
   protected initialColumn() {
     this.columns.forEach((item, index) => {
@@ -52,20 +49,21 @@ export class SunBaseGridComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.gridVirtualScroll.sunViewportReadyEvent.subscribe((e) => this.onViewportReadyEvent(e) );
-    this.gridVirtualScroll.sunNextPageEvent.subscribe((e) => this.onNextPageEvent(e) );
+    if ( this.isVirtualScroll ) {
+      this.subViewportReady = this.gridVirtualScroll.sunViewportReadyEvent.subscribe((e) => this.onViewportReadyEvent(e) );
+      this.subNextPage = this.gridVirtualScroll.sunNextPageEvent.subscribe((e) => this.onNextPageEvent(e) );
+    }
   }
   onViewportReadyEvent(e) {
-    this.initDataSource(e.viewport);
+    this.initGridTableDataSource(e.viewport);
   }
-  initDataSource(viewport) {
+  initGridTableDataSource(viewport) {
     if (this.dataSource) {
       return;
     }
     this.dataSource = new GridTableDataSource([], {
       viewport: viewport,
     });
-
     this.dataSourceService.getAllData()
     .subscribe(
       (data: any[]) => {
@@ -78,7 +76,6 @@ export class SunBaseGridComponent implements OnInit, AfterViewInit, OnDestroy {
       (err: any) => console.log(err)
     );
   }
-
   onNextPageEvent(e) {
     if ( this.dataSource && this.dataSource.allData && this.dataSource.allData.length > 0 ) {
       const range = e.range;
@@ -87,34 +84,17 @@ export class SunBaseGridComponent implements OnInit, AfterViewInit, OnDestroy {
       if ( end + buffer > this.page * this.pageSize ) {
         this.page++;
         this.pending = true;
-        setTimeout(() => {
-          this.dataSource.allData = this._alldata.slice(0, this.page * this.pageSize);
-          this.pending = false;
-        }, 250);
+        this.loadRemoteData();
       }
     }
   }
-
-  /*
-  protected initalDataSource() {
-    this.loadDataSource();
-    this.dataSource.filterPredicate = this.createColumnFilter(this.columnKeys);
+  protected loadRemoteData() {
   }
-  public loadDataSource() {
-    if ( this.lazyLoading ) {
-        this.loading = true;
-        // this.lastLoadEvent = event
-        const offset = this.pageSize *  this.firstPage;
-        const limit = offset + this.pageSize;
-        this.dataSourceService.fetchDataSource(0, limit)
-        .subscribe(
-          (data: any[]) => {
-            this.dataSource.data = data['data'];
-          },
-          (err: any) => console.log(err)
-        );
 
-    } else { this.getAllDataSource(); }
+  protected initMatTableDataSource() {
+    this.dataSource = new MatTableDataSource();
+    this.dataSource.filterPredicate = this.createColumnFilter(this.columnKeys);
+    this.getAllDataSource();
   }
   protected getAllDataSource() {
     this.dataSourceService.getAllDataSource()
@@ -125,7 +105,6 @@ export class SunBaseGridComponent implements OnInit, AfterViewInit, OnDestroy {
       (err: any) => console.log(err)
     );
   }
-
   protected createColumnFilter(columnKeys): (data: any, filter: any) => boolean {
     const me = this;
     const filterFunction = function(data: any, filter: any): boolean {
@@ -166,8 +145,14 @@ export class SunBaseGridComponent implements OnInit, AfterViewInit, OnDestroy {
         }
       }
     } else { return true; }
-  }*/
+  }
 
   ngOnDestroy() {
+    if (this.subViewportReady) {
+      this.subViewportReady.unsubscribe();
+    }
+    if (this.subNextPage) {
+      this.subNextPage.unsubscribe();
+    }
   }
 }

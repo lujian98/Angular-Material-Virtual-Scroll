@@ -15,6 +15,7 @@ export class CarTableComponent extends SunBaseGridComponent implements OnInit {
     protected dataSourceService: CarTableDataService,
   ) {
     super();
+    this.isVirtualScroll = true;
   }
 
   ngOnInit() {
@@ -26,5 +27,12 @@ export class CarTableComponent extends SunBaseGridComponent implements OnInit {
       { field: 'color', header: 'Color' }
     ];
     super.ngOnInit();
+  }
+
+  protected loadRemoteData() {
+    setTimeout(() => {
+      this.dataSource.allData = this._alldata.slice(0, this.page * this.pageSize);
+      this.pending = false;
+    }, 250);
   }
 }
