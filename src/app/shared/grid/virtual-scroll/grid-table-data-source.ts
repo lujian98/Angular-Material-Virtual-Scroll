@@ -4,9 +4,9 @@ import { BehaviorSubject, combineLatest, Observable } from 'rxjs';
 import { map, shareReplay, startWith } from 'rxjs/operators';
 
 export class GridTableDataSource<T> extends DataSource<T> {
-  readonly queryData: Observable<T[]>;
+  readonly queryData$: Observable<T[]>;
   private readonly _queryData = new BehaviorSubject<T[]>([]);
-  private readonly visibleData: Observable<any[]>;
+  private readonly visibleData$: Observable<any[]>;
   private _data: T[];
 
   get allData(): T[] {
@@ -18,7 +18,7 @@ export class GridTableDataSource<T> extends DataSource<T> {
   }
   get data(): T[] {
     let data: T[];
-    this.visibleData.subscribe(d => (data = d)).unsubscribe();
+    this.visibleData$.subscribe(d => (data = d)).unsubscribe();
     return data;
   }
   constructor(
@@ -27,7 +27,7 @@ export class GridTableDataSource<T> extends DataSource<T> {
   ) {
     super();
     this._data = initialData;
-    this.queryData = this._queryData.asObservable();
+    this.queryData$ = this._queryData.asObservable();
     this._queryData.next(initialData);
     const sliced = combineLatest(
       this._queryData,
@@ -37,10 +37,10 @@ export class GridTableDataSource<T> extends DataSource<T> {
         start == null || end == null ? data : data.slice(start, end)
       )
     );
-    this.visibleData = sliced.pipe(shareReplay(1));
+    this.visibleData$ = sliced.pipe(shareReplay(1));
   }
   connect() {
-    return this.visibleData;
+    return this.visibleData$;
   }
   disconnect() { }
 }

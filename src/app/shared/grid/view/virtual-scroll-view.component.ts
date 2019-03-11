@@ -25,11 +25,8 @@ export class SunVirtualScrollViewComponent<T> implements AfterViewInit, OnDestro
 
 
   isDataSourceReady: boolean;
-  offset: Observable<number>;
+  offset$: Observable<number>;
   sticky: boolean;
-
-  page = 1;
-  pageSize = 80;
 
   private sub: Subscription;
 
@@ -38,7 +35,7 @@ export class SunVirtualScrollViewComponent<T> implements AfterViewInit, OnDestro
 
   ngAfterViewInit() {
     setTimeout(() => {
-      this.offset = this.viewport.renderedRangeStream.pipe(
+      this.offset$ = this.viewport.renderedRangeStream.pipe(
         map(() => -this.viewport.getOffsetToRenderedContentStart())
       );
       this.sunViewportReadyEvent.emit({viewport: this.viewport});

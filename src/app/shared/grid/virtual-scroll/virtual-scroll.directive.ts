@@ -38,14 +38,14 @@ export class GridTableVirtualScrollDirective
   }
   ngOnChanges(changes: SimpleChanges) {
     if ( changes.isDataSourceReady.currentValue) {
-      this.initialScrollStrateg();
+      this.initialScrollStrategy();
     }
     this.scrollStrategy.setScrollHeight(this.rowHeight, this.offset);
   }
-  initialScrollStrateg() {
+  initialScrollStrategy() {
     const table = this.gridView.table;
     if (table.dataSource instanceof GridTableDataSource) {
-      this.sub = table.dataSource.queryData.subscribe(data => {
+      this.sub = table.dataSource.queryData$.subscribe(data => {
         this.scrollStrategy.setDataLength(data.length);
       });
     }
