@@ -1,12 +1,22 @@
-<h1 class="title"> Virtual Scroll with Angular Material </h1>
+
+<nested-menu-example [menuItem]="menuUsers"></nested-menu-example>
+<nested-menu-example [menuItem]="menuManagements"></nested-menu-example>
+<nested-menu-example [menuItem]="menuAdmins"></nested-menu-example>
+
+<nested-menu-example [menuItem]="menuUsers"></nested-menu-example>
+<nested-menu-example [menuItem]="menuManagements"></nested-menu-example>
+<nested-menu-example [menuItem]="menuAdmins"></nested-menu-example>
+
 
 <cdk-virtual-scroll-viewport gridTableVirtualScroll
 	(scrolledIndexChange)="nextBatch($event)">
-	<mat-table matSort [dataSource]="dataSource" [trackBy]="id">
+	<mat-table matSort [dataSource]="dataSource" [trackBy]="id" style="z-index:1050" >
 
-		<ng-container *ngFor="let column of visibleColumns; let i = index" matColumnDef="{{ column.field }}">
-			<mat-header-cell *matHeaderCellDef>
+		<ng-container *ngFor="let column of visibleColumns; let i = index"
+		matColumnDef="{{ column.field }}" >
+			<mat-header-cell *matHeaderCellDef >
 				<div mat-sort-header>{{ column.field }}</div>
+				<nested-menu-example [menuItem]="menuAdmins"></nested-menu-example>
 			</mat-header-cell>
 			<mat-cell *matCellDef="let row">{{ row[column.field] }}</mat-cell>
 		</ng-container>

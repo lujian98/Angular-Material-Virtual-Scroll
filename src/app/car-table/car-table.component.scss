@@ -2,6 +2,17 @@
   .mat-table {
     width: 100%;
   }
+  /*
+  .mat-footer-row, mat-row {
+    min-height: 48px;
+  } */
+}
+
+.cdk-overlay-container{
+  top: 1366.5px;
+}
+.cdk-overlay-connected-position-bounding-box{
+  top:0 !important;
 }
 
 @mixin progress {

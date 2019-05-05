@@ -32,6 +32,37 @@ export class CarTableComponent<T> implements OnInit {
   page = 1;
   pageSize = 80;
 
+  menuUsers = {
+    label: 'User',
+    children: [{
+      label: 'User 1',
+    }, {
+      label: 'User 3'
+    }, {
+      label: 'User 4'
+    }]
+  };
+
+  menuManagements = {
+    label: 'Management',
+    children: [{
+      label: 'Management 1'
+    }]
+  };
+
+  menuAdmins = {
+    label: 'Admin',
+    children: [{
+      label: 'Admin 1'
+    }, {
+      label: 'Admin 2'
+    }, {
+      label: 'Admin 3'
+    }, {
+      label: 'Admin 4'
+    }]
+  };
+
   constructor(
     protected dataSourceService: CarTableDataService,
   ) {
