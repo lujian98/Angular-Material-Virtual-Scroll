@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { GridModule } from '../grid/grid.module';
-import { CarTableComponent } from './car-table.component';
+import { UserTableComponent } from './user-table.component';
 
-const components = [CarTableComponent];
+const components = [UserTableComponent];
 
 @NgModule({
   declarations: components,
@@ -13,4 +13,4 @@ const components = [CarTableComponent];
     GridModule,
   ],
 })
-export class CarTableModule { }
+export class UserTableModule { }

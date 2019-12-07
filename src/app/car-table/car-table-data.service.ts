@@ -1,17 +1,26 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { GridAbstractDataService } from '../grid/grid-abstract-data.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class CarTableDataService {
+export class CarTableDataService extends GridAbstractDataService{
   constructor(
-    private http: HttpClient,
+    http: HttpClient,
   ) {
+    super(http);
   }
 
-  getAllData(): Observable<any[]> {
-    return this.http.get<any[]>('./assets/data/cars-huge.json');
+  getRequetedData(criteria: string): Observable<any> {
+    return this.http.get<any>('./assets/data/cars-huge.json').pipe(
+      map((response: any) => {
+        console.log( response);
+        return response.data;
+      })
+    );
   }
 }
+

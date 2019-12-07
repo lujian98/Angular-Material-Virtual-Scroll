@@ -1,29 +1,30 @@
 import { Component, OnInit } from '@angular/core';
 import { GridAbstractDataService } from '../grid/grid-abstract-data.service';
-import { CarTableDataService } from './car-table-data.service';
+import { UserTableDataService } from './user-table-data.service';
 
 @Component({
-  selector: 'app-car-table',
-  templateUrl: './car-table.component.html',
-  styleUrls: ['./car-table.component.scss'],
+  selector: 'app-user-table',
+  templateUrl: './user-table.component.html',
+  styleUrls: ['./user-table.component.scss'],
   providers: [
     {
       provide: GridAbstractDataService,
-      useClass: CarTableDataService
+      useClass: UserTableDataService
     }
   ]
 })
-export class CarTableComponent<T> implements OnInit {
+export class UserTableComponent<T> implements OnInit {
   visibleColumns: any[];
 
   constructor(
   ) {
+
     this.visibleColumns = [{
-      field: 'id'
+      field: 'cell'
     }, {
-      field: 'vin'
+      field: 'email'
     }, {
-      field: 'brand'
+      field: 'gender'
     }, {
       field: 'year'
     }, {
